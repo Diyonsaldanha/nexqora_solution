@@ -1,9 +1,8 @@
+// File: components/Footer.tsx
 "use client";
 import Link from "next/link";
+import { services } from "@/lib/services-data"; // <-- Imported services
 
-// NOTE: Replace "[Your Company]" and the contact details below with your real brand name and info.
-
-// Reusable SVG Icons for the footer
 const ArrowUpRightIcon = () => (
   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
     <path d="M7 17L17 7M17 17V7H7" />
@@ -45,13 +44,8 @@ export default function Footer() {
     <footer className="bg-[#fdf7f4] text-[#595959] pt-20 pb-10 px-6 font-sans selection:bg-[#ff7f49] selection:text-[#001726]">
       <div className="max-w-[1200px] mx-auto">
         
-        {/* CTA Card Banner */}
         <div className="bg-[#ffffff] rounded-[24px] p-8 md:p-12 lg:px-16 lg:py-14 mb-24 flex flex-col md:flex-row justify-between items-center relative overflow-hidden shadow-[0_4px_24px_rgba(0,0,0,0.04)] border border-gray-100">
-          
-          {/* Subtle patterned background on the right side */}
-          <div className="absolute right-0 top-0 bottom-0 w-1/2 opacity-[0.03] pointer-events-none" 
-               style={{ backgroundImage: 'radial-gradient(#ff7f49 2px, transparent 2px)', backgroundSize: '16px 16px' }}>
-          </div>
+          <div className="absolute right-0 top-0 bottom-0 w-1/2 opacity-[0.03] pointer-events-none" style={{ backgroundImage: 'radial-gradient(#ff7f49 2px, transparent 2px)', backgroundSize: '16px 16px' }}></div>
 
           <div className="z-10 max-w-xl mb-8 md:mb-0">
             <h2 className="text-[32px] md:text-[40px] font-bold text-[#0a1128] mb-4 leading-[1.1] tracking-tight">
@@ -63,19 +57,16 @@ export default function Footer() {
           </div>
 
           <div className="z-10 flex flex-col items-center md:items-end">
-            <button className="bg-[#ff7f49] text-white px-8 py-3.5 rounded-[12px] font-bold text-[15px] flex items-center gap-2 hover:bg-[#e66c3a] transition-all shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0000ee]">
+            <Link href="/contact" className="bg-[#ff7f49] text-white px-8 py-3.5 rounded-[12px] font-bold text-[15px] flex items-center gap-2 hover:bg-[#e66c3a] transition-all shadow-sm">
               Start a Project <span className="scale-75"><ArrowUpRightIcon /></span>
-            </button>
+            </Link>
             <span className="text-[13px] font-medium text-[#595959] mt-3">
               Free consultation, no obligation
             </span>
           </div>
         </div>
 
-        {/* Main Footer Links */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-10 mb-20">
-          
-          {/* Column 1: Brand & Newsletter */}
           <div className="lg:col-span-2 pr-4">
             <div className="mb-4 flex items-center gap-2">
               <LogoLayerIcon />
@@ -87,43 +78,33 @@ export default function Footer() {
               Building reliable web, mobile, cloud, and desktop software for growing businesses.
             </p>
             <form className="flex items-center bg-[#ffffff] rounded-[8px] p-1.5 border border-gray-200 max-w-[280px]">
-              <input 
-                type="email" 
-                placeholder="Email Address" 
-                required
-                className="w-full bg-transparent px-3 py-2 text-[14px] font-medium text-[#0a1128] placeholder-[#595959]/60 outline-none"
-              />
-              <button 
-                type="submit" 
-                className="bg-[#ff7f49] text-white p-2 rounded-[6px] hover:bg-[#e66c3a] transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0a1128]"
-                aria-label="Subscribe"
-              >
+              <input type="email" placeholder="Email Address" required className="w-full bg-transparent px-3 py-2 text-[14px] font-medium text-[#0a1128] placeholder-[#595959]/60 outline-none" />
+              <button type="submit" className="bg-[#ff7f49] text-white p-2 rounded-[6px] hover:bg-[#e66c3a] transition-colors" aria-label="Subscribe">
                 <ArrowUpRightIcon />
               </button>
             </form>
           </div>
 
-          {/* Column 2: Services */}
           <div className="lg:col-span-1">
             <h6 className="text-[#0a1128] text-[16px] font-bold mb-6">Services</h6>
             <ul className="space-y-4">
-              {['Web Development', 'Mobile App Dev', 'Cloud Services', 'Desktop Solutions'].map((item) => (
-                <li key={item}>
-                  <Link href="#" className="text-[#595959] text-[14px] font-medium hover:text-[#ff7f49] transition-colors block w-fit focus-visible:outline-[#0a1128]">
-                    {item}
+              {/* Maps exactly the first 4 services dynamically */}
+              {services.slice(0, 4).map((srv) => (
+                <li key={srv.slug}>
+                  <Link href={`/services/${srv.slug}`} className="text-[#595959] text-[14px] font-medium hover:text-[#ff7f49] transition-colors block w-fit">
+                    {srv.title}
                   </Link>
                 </li>
               ))}
             </ul>
           </div>
 
-          {/* Column 3: Quick Link */}
           <div className="lg:col-span-1">
             <h6 className="text-[#0a1128] text-[16px] font-bold mb-6">Quick Link</h6>
             <ul className="space-y-4">
               {['Home', 'About Us', 'Portfolio', 'Contact Us'].map((item) => (
                 <li key={item}>
-                  <Link href="#" className="text-[#595959] text-[14px] font-medium hover:text-[#ff7f49] transition-colors block w-fit focus-visible:outline-[#0a1128]">
+                  <Link href="#" className="text-[#595959] text-[14px] font-medium hover:text-[#ff7f49] transition-colors block w-fit">
                     {item}
                   </Link>
                 </li>
@@ -131,13 +112,12 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Column 4: Company */}
           <div className="lg:col-span-1">
             <h6 className="text-[#0a1128] text-[16px] font-bold mb-6">Company</h6>
             <ul className="space-y-4">
               {['About', 'Careers', 'Blog', 'Latest News'].map((item) => (
                 <li key={item}>
-                  <Link href="#" className="text-[#595959] text-[14px] font-medium hover:text-[#ff7f49] transition-colors block w-fit focus-visible:outline-[#0a1128]">
+                  <Link href="#" className="text-[#595959] text-[14px] font-medium hover:text-[#ff7f49] transition-colors block w-fit">
                     {item}
                   </Link>
                 </li>
@@ -145,43 +125,32 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Column 5: Contact */}
           <div className="lg:col-span-1">
             <h6 className="text-[#0a1128] text-[16px] font-bold mb-6">Contact</h6>
             <p className="text-[#595959] text-[14px] font-medium leading-relaxed mb-4 max-w-[200px]">
               [Street Address],<br/> [City, Country]
             </p>
             <div className="space-y-3">
-              <Link href="mailto:hello@yourcompany.com" className="flex items-center gap-3 text-[#595959] text-[14px] font-medium hover:text-[#0a1128] transition-colors w-fit focus-visible:outline-[#0a1128]">
+              <Link href="mailto:hello@yourcompany.com" className="flex items-center gap-3 text-[#595959] text-[14px] font-medium hover:text-[#0a1128] transition-colors w-fit">
                 <span className="text-[#ff7f49]"><MailIcon /></span>
                 hello@yourcompany.com
               </Link>
-              <Link href="tel:+10000000000" className="flex items-center gap-3 text-[#595959] text-[14px] font-medium hover:text-[#0a1128] transition-colors w-fit focus-visible:outline-[#0a1128]">
+              <Link href="tel:+10000000000" className="flex items-center gap-3 text-[#595959] text-[14px] font-medium hover:text-[#0a1128] transition-colors w-fit">
                 <span className="text-[#ff7f49]"><PhoneIcon /></span>
                 [Phone Number]
               </Link>
             </div>
           </div>
-
         </div>
 
-        {/* Bottom Bar */}
         <div className="relative border-t border-gray-300 pt-8 mt-12 flex flex-col items-center">
-          
-          {/* Scroll to top button */}
-          <button 
-            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-            className="absolute left-1/2 -top-[20px] -translate-x-1/2 bg-[#ffffff] w-[40px] h-[40px] rounded-[8px] flex items-center justify-center text-[#0a1128] border border-gray-200 hover:text-[#ff7f49] transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0a1128]"
-            aria-label="Scroll to top"
-          >
+          <button onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="absolute left-1/2 -top-[20px] -translate-x-1/2 bg-[#ffffff] w-[40px] h-[40px] rounded-[8px] flex items-center justify-center text-[#0a1128] border border-gray-200 hover:text-[#ff7f49] transition-colors" aria-label="Scroll to top">
             <DoubleUpIcon />
           </button>
-
           <p className="text-[13px] text-[#595959] font-medium">
             Copyright ©{currentYear}, [Your Company] All Rights Reserved
           </p>
         </div>
-        
       </div>
     </footer>
   );
