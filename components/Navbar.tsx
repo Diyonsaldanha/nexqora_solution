@@ -1,8 +1,10 @@
+// File: components/Navbar.tsx
 "use client";
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
+import { services } from "@/lib/services-data";
 
 export default function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -19,6 +21,10 @@ export default function Navbar() {
       document.body.style.overflow = "";
     }
   }, [isMobileMenuOpen]);
+
+  // Group services logically
+  const devServices = services.filter(s => ['web-development', 'mobile-app-development', 'desktop-solutions'].includes(s.slug));
+  const infraServices = services.filter(s => ['cloud-services', 'iso-consultancy', 'domain-hosting'].includes(s.slug));
 
   return (
     <>
@@ -86,38 +92,30 @@ export default function Navbar() {
                       </button>
                     </div>
 
-                    {/* Service links column */}
+                    {/* Dynamic Service Links Column */}
                     <div className="p-10 bg-white">
                       {activeTab === "tab-dev" && (
                         <div className="animate-fade-in grid grid-cols-2 gap-x-10 gap-y-8">
-                          <Link href="#" className="group block">
-                            <span className="text-base font-bold text-[#0a1128] group-hover:text-[#ff7f49] transition-colors">Web Development</span>
-                            <p className="text-sm text-[#595959] mt-1">Custom enterprise websites, portals, and SaaS platforms built on modern frameworks.</p>
-                          </Link>
-                          <Link href="#" className="group block">
-                            <span className="text-base font-bold text-[#0a1128] group-hover:text-[#ff7f49] transition-colors">Mobile App Dev</span>
-                            <p className="text-sm text-[#595959] mt-1">High-performance native and hybrid apps for iOS & Android.</p>
-                          </Link>
-                          <Link href="#" className="group block">
-                            <span className="text-base font-bold text-[#0a1128] group-hover:text-[#ff7f49] transition-colors">Desktop Solutions</span>
-                            <p className="text-sm text-[#595959] mt-1">Robust desktop software for offline capability and system integration.</p>
-                          </Link>
+                          {devServices.map((srv) => (
+                            <Link key={srv.slug} href={`/services/${srv.slug}`} onClick={() => setOpenMenu(null)} className="group/link block">
+                              <span className="text-base font-bold text-[#0a1128] group-hover/link:text-[#ff7f49] transition-colors">
+                                {srv.title}
+                              </span>
+                              <p className="text-sm text-[#595959] mt-1">{srv.shortDesc}</p>
+                            </Link>
+                          ))}
                         </div>
                       )}
                       {activeTab === "tab-infra" && (
                         <div className="animate-fade-in grid grid-cols-2 gap-x-10 gap-y-8">
-                          <Link href="#" className="group block">
-                            <span className="text-base font-bold text-[#0a1128] group-hover:text-[#ff7f49] transition-colors">Cloud Services</span>
-                            <p className="text-sm text-[#595959] mt-1">Secure cloud migration, server management, and scalable infrastructure.</p>
-                          </Link>
-                          <Link href="#" className="group block">
-                            <span className="text-base font-bold text-[#0a1128] group-hover:text-[#ff7f49] transition-colors">ISO Consultancy</span>
-                            <p className="text-sm text-[#595959] mt-1">Guidance for ISO certification, compliance audits, and process standardization.</p>
-                          </Link>
-                          <Link href="#" className="group block">
-                            <span className="text-base font-bold text-[#0a1128] group-hover:text-[#ff7f49] transition-colors">Domain & Hosting</span>
-                            <p className="text-sm text-[#595959] mt-1">Digital identity management, DNS services, SSL security, and premium hosting.</p>
-                          </Link>
+                          {infraServices.map((srv) => (
+                            <Link key={srv.slug} href={`/services/${srv.slug}`} onClick={() => setOpenMenu(null)} className="group/link block">
+                              <span className="text-base font-bold text-[#0a1128] group-hover/link:text-[#ff7f49] transition-colors">
+                                {srv.title}
+                              </span>
+                              <p className="text-sm text-[#595959] mt-1">{srv.shortDesc}</p>
+                            </Link>
+                          ))}
                         </div>
                       )}
                     </div>
@@ -134,8 +132,9 @@ export default function Navbar() {
                         </p>
                       </div>
                       <Link
-                        href="#contact"
+                        href="/contact"
                         className="mt-6 inline-flex items-center justify-center bg-[#ff7f49] text-white px-5 py-2.5 rounded-full font-bold text-sm hover:bg-[#e86d3a] transition-all"
+                        onClick={() => setOpenMenu(null)}
                       >
                         Talk to Us
                       </Link>
@@ -143,9 +142,9 @@ export default function Navbar() {
                   </div>
                 </div>
               </li>
-              <li className="h-full flex items-center">
+              {/* <li className="h-full flex items-center">
                 <Link href="/about" className="text-[15px] font-medium text-[#595959] px-4 py-2 rounded-full hover:bg-[#ff7f49]/10 hover:text-[#ff7f49] transition-all">About</Link>
-              </li>
+              </li> */}
               <li className="h-full flex items-center">
                 <Link href="/contact" className="text-[15px] font-medium text-[#595959] px-4 py-2 rounded-full hover:bg-[#ff7f49]/10 hover:text-[#ff7f49] transition-all">Contact</Link>
               </li>
@@ -153,12 +152,11 @@ export default function Navbar() {
           </nav>
 
           <div className="hidden lg:flex items-center gap-4">
-            <Link href="#contact" className="bg-[#ff7f49] text-white px-6 py-2.5 rounded-full font-bold text-sm hover:bg-[#e86d3a] transition-all shadow-lg active:scale-95">
+            <Link href="/contact" className="bg-[#ff7f49] text-white px-6 py-2.5 rounded-full font-bold text-sm hover:bg-[#e86d3a] transition-all shadow-lg active:scale-95">
               Get a Quote
             </Link>
           </div>
 
-          {/* Mobile Toggle */}
           <button onClick={toggleMobileMenu} className="flex flex-col justify-center gap-[5px] cursor-pointer p-2 lg:hidden z-[1101]">
             <span className={`w-6 h-0.5 transition-all duration-300 origin-center ${isMobileMenuOpen ? "translate-y-[7px] rotate-45 bg-[#ff7f49]" : "bg-[#0a1128]"}`}></span>
             <span className={`w-6 h-0.5 transition-all duration-300 ${isMobileMenuOpen ? "opacity-0" : "bg-[#0a1128]"}`}></span>
@@ -185,12 +183,8 @@ export default function Navbar() {
                   </Link>
                 </li>
 
-                {/* Mobile Services accordion */}
                 <li className="border-b border-gray-100">
-                  <button
-                    onClick={() => setMobileServicesOpen(!mobileServicesOpen)}
-                    className="w-full flex items-center justify-between py-4 text-lg font-bold text-[#0a1128]"
-                  >
+                  <button onClick={() => setMobileServicesOpen(!mobileServicesOpen)} className="w-full flex items-center justify-between py-4 text-lg font-bold text-[#0a1128]">
                     Services
                     <svg className={`w-3.5 transition-transform duration-200 ${mobileServicesOpen ? "rotate-180" : ""}`} viewBox="0 0 10 6" fill="none" stroke="currentColor" strokeWidth="1.5">
                       <path d="M1 1L5 5L9 1" strokeLinecap="round" strokeLinejoin="round" />
@@ -198,28 +192,16 @@ export default function Navbar() {
                   </button>
                   <AnimatePresence>
                     {mobileServicesOpen && (
-                      <motion.div
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: "auto", opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }}
-                        className="overflow-hidden"
-                      >
+                      <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} className="overflow-hidden">
                         <div className="pb-4 flex flex-col gap-1">
-                          {[
-                            "Web Development",
-                            "Mobile App Dev",
-                            "Desktop Solutions",
-                            "Cloud Services",
-                            "ISO Consultancy",
-                            "Domain & Hosting",
-                          ].map((service) => (
+                          {services.map((srv) => (
                             <Link
-                              key={service}
-                              href="#"
+                              key={srv.slug}
+                              href={`/services/${srv.slug}`}
                               className="py-2.5 pl-4 text-[15px] font-medium text-[#595959] hover:text-[#ff7f49] transition-colors"
                               onClick={toggleMobileMenu}
                             >
-                              {service}
+                              {srv.title}
                             </Link>
                           ))}
                         </div>
@@ -240,11 +222,7 @@ export default function Navbar() {
                 </li>
               </ul>
 
-              <Link
-                href="#contact"
-                className="mt-2 bg-[#ff7f49] text-white text-center px-6 py-3.5 rounded-full font-bold text-base hover:bg-[#e86d3a] transition-all active:scale-95"
-                onClick={toggleMobileMenu}
-              >
+              <Link href="/contact" className="mt-2 bg-[#ff7f49] text-white text-center px-6 py-3.5 rounded-full font-bold text-base hover:bg-[#e86d3a] transition-all active:scale-95" onClick={toggleMobileMenu}>
                 Get a Quote
               </Link>
             </div>

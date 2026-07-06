@@ -3,71 +3,17 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { useState } from "react";
+import { services } from "@/lib/services-data"; // <-- Centralized import
 
-// NOTE: Replace "[Your Company]" below with your actual brand name wherever it appears.
-
-// Reusable SVG Icon
 const ArrowUpRight = () => (
   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
     <path d="M7 17L17 7M17 17V7H7" />
   </svg>
 );
 
-// Service icons — line style, fixed orange, no emoji
-const iconProps = { width: 22, height: 22, viewBox: "0 0 24 24", fill: "none", stroke: "#ff7f49", strokeWidth: 1.6, strokeLinecap: "round" as const, strokeLinejoin: "round" as const };
-
-const WebIcon = () => (
-  <svg {...iconProps}>
-    <rect x="3" y="4.5" width="18" height="15" rx="2" />
-    <line x1="3" y1="8.5" x2="21" y2="8.5" />
-    <circle cx="6.2" cy="6.5" r="0.5" fill="#ff7f49" stroke="none" />
-    <circle cx="8.4" cy="6.5" r="0.5" fill="#ff7f49" stroke="none" />
-    <path d="M9.5 12.5L7.5 14.5L9.5 16.5" />
-    <path d="M14.5 12.5L16.5 14.5L14.5 16.5" />
-  </svg>
-);
-
-const MobileIcon = () => (
-  <svg {...iconProps}>
-    <rect x="7" y="2.5" width="10" height="19" rx="2.2" />
-    <line x1="10.3" y1="18.3" x2="13.7" y2="18.3" />
-  </svg>
-);
-
-const DesktopIcon = () => (
-  <svg {...iconProps}>
-    <rect x="3" y="4" width="18" height="12.5" rx="1.5" />
-    <line x1="8" y1="20" x2="16" y2="20" />
-    <line x1="12" y1="16.5" x2="12" y2="20" />
-  </svg>
-);
-
-const CloudIcon = () => (
-  <svg {...iconProps}>
-    <path d="M7.2 18h10.3a3.4 3.4 0 0 0 0-6.8 5 5 0 0 0-9.5-1.6A3.9 3.9 0 0 0 7.2 18Z" />
-  </svg>
-);
-
-const ShieldCheckIcon = () => (
-  <svg {...iconProps}>
-    <path d="M12 3.2l7 2.9v5.1c0 4.4-3 8-7 9-4-1-7-4.6-7-9V6.1l7-2.9Z" />
-    <path d="M9 12.2l2 2 4-4.2" />
-  </svg>
-);
-
-const GlobeIcon = () => (
-  <svg {...iconProps}>
-    <circle cx="12" cy="12" r="8.5" />
-    <line x1="3.5" y1="12" x2="20.5" y2="12" />
-    <path d="M12 3.5c2.3 2.4 3.7 5.5 3.7 8.5s-1.4 6.1-3.7 8.5" />
-    <path d="M12 3.5c-2.3 2.4-3.7 5.5-3.7 8.5s1.4 6.1 3.7 8.5" />
-  </svg>
-);
-
 export default function Home() {
   const [activeTab, setActiveTab] = useState("Show All");
 
-  // Animations
   const fadeUp = {
     hidden: { opacity: 0, y: 16 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } }
@@ -77,18 +23,7 @@ export default function Home() {
     visible: { opacity: 1, transition: { staggerChildren: 0.1 } }
   };
 
-  // Shadow Token from Design System
   const shadowToken = "rgba(0, 0, 0, 0.26) 0px 0.602187px 0.602187px -1.25px, rgba(0, 0, 0, 0.23) 0px 2.28853px 2.28853px -2.5px, rgba(0, 0, 0, 0.09) 0px 10px 10px -3.75px";
-
-  // Our six core services
-  const services = [
-    { icon: WebIcon, title: "Web Development", desc: "Custom enterprise websites, portals, and SaaS platforms built on modern frameworks." },
-    { icon: MobileIcon, title: "Mobile App Dev", desc: "High-performance native and hybrid apps for a seamless experience on iOS & Android." },
-    { icon: DesktopIcon, title: "Desktop Solutions", desc: "Robust desktop software for offline capability, heavy computation, and system integration." },
-    { icon: CloudIcon, title: "Cloud Services", desc: "Secure cloud migration, server management, and scalable infrastructure architecture." },
-    { icon: ShieldCheckIcon, title: "ISO Consultancy", desc: "Professional guidance for ISO certification, compliance audits, and process standardization." },
-    { icon: GlobeIcon, title: "Domain & Hosting", desc: "Complete digital identity management, DNS services, SSL security, and premium hosting." }
-  ];
 
   return (
     <div className="font-sans text-[#0a1128] bg-[#ffffff] min-h-screen selection:bg-[#ff7f49] selection:text-[#001726]">
@@ -109,10 +44,10 @@ export default function Home() {
                 From web and mobile to cloud and desktop, we design and engineer reliable software that helps ambitious businesses launch faster, scale smarter, and stay secure.
               </motion.p>
               <motion.div variants={fadeUp} className="flex flex-col sm:flex-row gap-[16px]">
-                <Link href="#" className="flex items-center justify-center gap-[8px] bg-[#ff7f49] text-[#001726] px-[24px] py-[14px] rounded-[12px] font-medium hover:bg-[#e66c3a] transition-all active:scale-[0.98] shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0000ee]">
+                <Link href="#services" className="flex items-center justify-center gap-[8px] bg-[#ff7f49] text-[#001726] px-[24px] py-[14px] rounded-[12px] font-medium hover:bg-[#e66c3a] transition-all active:scale-[0.98] shadow-sm">
                   Our Services <ArrowUpRight />
                 </Link>
-                <Link href="#" className="flex items-center justify-center gap-[8px] bg-[#ffffff] text-[#001726] border border-[#595959]/30 px-[24px] py-[14px] rounded-[12px] font-medium hover:border-[#595959] transition-all active:scale-[0.98] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0000ee]">
+                <Link href="/about" className="flex items-center justify-center gap-[8px] bg-[#ffffff] text-[#001726] border border-[#595959]/30 px-[24px] py-[14px] rounded-[12px] font-medium hover:border-[#595959] transition-all active:scale-[0.98]">
                   About Us <ArrowUpRight />
                 </Link>
               </motion.div>
@@ -120,7 +55,7 @@ export default function Home() {
 
             <motion.div initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.6, delay: 0.1 }} className="relative mx-auto w-full max-w-lg lg:max-w-none">
               <div className="absolute inset-0 bg-[#ff7f49]/10 rounded-[20px] -z-10 transform translate-x-[16px] translate-y-[16px]" style={{ backgroundImage: 'radial-gradient(#ff7f49 1.5px, transparent 1.5px)', backgroundSize: '24px 24px' }}></div>
-              <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Software engineer working on code" className="rounded-[20px] object-cover w-full h-[500px] lg:h-[600px]" style={{ boxShadow: shadowToken }} />
+              <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Software engineer" className="rounded-[20px] object-cover w-full h-[500px] lg:h-[600px]" style={{ boxShadow: shadowToken }} />
               
               <motion.div initial={{ x: -20, opacity: 0 }} animate={{ x: 0, opacity: 1 }} transition={{ delay: 0.5 }} className="absolute top-1/3 -left-[16px] md:-left-[48px] bg-[#ffffff] p-[12px] pr-[16px] rounded-[20px] flex items-center gap-[12px] border border-gray-100" style={{ boxShadow: shadowToken }}>
                 <div className="flex -space-x-[8px]">
@@ -143,7 +78,7 @@ export default function Home() {
       </div>
 
       {/* ================= SERVICES ================= */}
-      <div className="bg-gradient-to-b from-[#fdf7f4] to-[#ffffff]">
+      <div id="services" className="bg-gradient-to-b from-[#fdf7f4] to-[#ffffff]">
         <section className="px-[20px] md:px-[40px] lg:px-[64px] xl:px-[80px] pb-[80px] lg:pb-[120px] max-w-[1200px] mx-auto relative z-20">
           <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="bg-[#ffffff] rounded-[20px] p-[32px] lg:p-[48px] border border-gray-200" style={{ boxShadow: shadowToken }}>
             <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-[16px] mb-[40px] pb-[24px] border-b border-gray-100">
@@ -155,11 +90,11 @@ export default function Home() {
 
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 border-t border-l border-gray-100">
               {services.map((srv, i) => (
-                <div key={i} className="flex flex-col items-start p-[24px] border-r border-b border-gray-100 hover:bg-[#fdf7f4]/50 transition-colors">
-                  <srv.icon />
-                  <h3 className="text-[15px] font-medium mt-[14px] mb-[6px] text-[#001726]">{srv.title}</h3>
-                  <p className="text-[#595959] mb-[14px] text-[13px] font-medium leading-[20px]">{srv.desc}</p>
-                  <Link href="#" className="mt-auto flex items-center gap-[6px] font-medium text-[13px] text-[#0a1128] hover:text-[#0000ee] transition-colors focus-visible:outline-[#0000ee]">
+                <div key={srv.slug} className="flex flex-col items-start p-[24px] border-r border-b border-gray-100 hover:bg-[#fdf7f4]/50 transition-colors group">
+                  <srv.Icon />
+                  <h3 className="text-[15px] font-medium mt-[14px] mb-[6px] text-[#001726] group-hover:text-[#ff7f49] transition-colors">{srv.title}</h3>
+                  <p className="text-[#595959] mb-[14px] text-[13px] font-medium leading-[20px]">{srv.shortDesc}</p>
+                  <Link href={`/services/${srv.slug}`} className="mt-auto flex items-center gap-[6px] font-medium text-[13px] text-[#0a1128] hover:text-[#ff7f49] transition-colors focus-visible:outline-[#0000ee]">
                     Read More <span className="scale-75 origin-left"><ArrowUpRight /></span>
                   </Link>
                 </div>
@@ -186,11 +121,9 @@ export default function Home() {
       {/* ================= SPLIT FEATURES SECTION ================= */}
       <section className="py-[80px] lg:py-[120px] px-[20px] md:px-[40px] lg:px-[64px] xl:px-[80px] max-w-[1400px] mx-auto">
         <div className="grid lg:grid-cols-2 gap-[64px] items-center">
-          
           <motion.div initial={{ opacity: 0, x: -24 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="relative rounded-[20px] bg-[#f5e6db] p-[32px] h-[500px] lg:h-[600px]">
-            <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Development team planning a project" className="w-full h-full object-cover rounded-[14px]" style={{ boxShadow: shadowToken }} />
+            <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Development team" className="w-full h-full object-cover rounded-[14px]" style={{ boxShadow: shadowToken }} />
             
-            {/* Floating Chart Badge */}
             <div className="absolute -right-[16px] md:-right-[32px] bottom-[80px] bg-[#ffffff] p-[24px] rounded-[14px] w-[260px]" style={{ boxShadow: shadowToken }}>
               <h4 className="font-medium text-[14px] mb-[16px] text-[#001726]">Projects Delivered</h4>
               <div className="flex items-end gap-[8px] h-[96px]">
@@ -224,7 +157,6 @@ export default function Home() {
               </div>
             </div>
           </motion.div>
-
         </div>
       </section>
 
